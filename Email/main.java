@@ -1,6 +1,6 @@
 import EmailApp.EmailApp;
 
-public class FirstJavaProgram
+public class main
 {
     public static void main(String []args){
         EmailApp newEmail = new EmailApp("Bruce","Oneal");
