@@ -4,18 +4,19 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import javax.xml.soap.Text;
+import static  com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class MyActor extends Image {
 
+
+    private float distance;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -26,36 +27,46 @@ public class MyActor extends Image {
                 ,getScaleX(),getScaleY(),getRotation());
 
     }
+    float speed;
 
     public MyActor(Texture texture)
     {
+
+
         super(texture);
-
+        distance = 100f;
+        speed = 0.1f;
         setBounds(getX(),getY(), getWidth(), getHeight());
-
-
 
 
         addListener(new InputListener(){
                         @Override
                         public boolean keyDown(InputEvent event, int keycode) {
-                            if (keycode == Input.Keys.RIGHT)
-                            {
-                                MoveByAction mba = new MoveByAction();
-                                mba.setAmount(100f, 100f);
-                                mba.setDuration(5f);
-                                MyActor.this.addAction(mba);
-                            }
-                            else if(keycode == Input.Keys.A)
-                            {
-                                ColorAction colorAction = new ColorAction();
-                                colorAction.setEndColor(Color.PURPLE);
-                                colorAction.setDuration(3f);
-                                MyActor.this.addAction((colorAction));
-                            }
-                                return true;
+
+                            Movement2D(keycode);
+                            return true;
                         }
         });
+    }
+
+    private void Movement2D(int keycode) {
+        switch (keycode)
+        {
+            case  Input.Keys.UP:
+                addAction(moveTo(getX(),getY() + distance,speed));
+                break;
+            case  Input.Keys.DOWN:
+                addAction(moveTo(getX(),getY()-distance,speed));
+                break;
+            case  Input.Keys.RIGHT:
+                addAction(moveTo(getX()+distance,getY(),speed));
+                break;
+            case  Input.Keys.LEFT:
+                addAction(moveTo(getX()-distance,getY(),speed));
+                break;
+            default:
+                break;
+        }
     }
 
 
