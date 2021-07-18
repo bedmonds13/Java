@@ -49,10 +49,10 @@ public class ActorTest  extends ApplicationAdapter   {
 
         asteroidSpawner = new Spawner();
         stage.addActor(asteroidSpawner);
-        for (int i = 0; i < asteroidSpawner.spawnables.size() ;i++)
+        for (int i = 0; i < asteroidSpawner.spawnableList.size() ; i++)
         {
-            asteroidSpawner.spawnables.get(i).addAction(moveTo(stage.getWidth()-asteroidSpawner.getWidth(), (stage.getHeight()/5) * i));
-            stage.addActor(asteroidSpawner.spawnables.get(i));
+            asteroidSpawner.spawnableList.get(i).addAction(moveTo(stage.getWidth()-asteroidSpawner.getWidth(), (stage.getHeight()/5) * i));
+            stage.addActor(asteroidSpawner.spawnableList.get(i));
         }
 
         actor = new Player(new Texture(Gdx.files.internal("blueship1.png")));

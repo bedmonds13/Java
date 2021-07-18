@@ -11,20 +11,20 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 public class Spawner extends Actor {
     List<Asteroid> spawnablesStored;
-    List<Asteroid> spawnables;
+    List<Asteroid> spawnableList;
     float time=0;
+    Random randomSeed;
 
     Spawner()
     {
 
-        spawnables = new ArrayList<>();
-
+        spawnableList = new ArrayList<>();
+        randomSeed = new Random();
         Texture texture = new Texture(Gdx.files.internal("asteroid1.png"));
-        for (int i = 0; i < 5; i++) {
-            spawnables.add(new Asteroid(texture));
-
-            spawnables.get(i).setScale(0.5f);
-            spawnables.get(i).IsActive = false;
+        for (int i = 0; i < 30; i++) {
+            spawnableList.add(new Asteroid(texture));
+            spawnableList.get(i).IsActive = false;
+            spawnableList.get(i).setScale(0.5f);
         }
     }
 
@@ -32,18 +32,37 @@ public class Spawner extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         time += Gdx.graphics.getDeltaTime();
-        if(time > 5 )
-        {
-            for (Asteroid asteroid: spawnables
-                 ) {
-                asteroid.IsActive= true;
 
-            }
-        }
-        if(time > 15 && spawnables.get(0).getX() < 0)
+        if(time > 0.5f  && HasAvailableObject())
         {
-            spawnables.get(0).setX(getStage().getWidth());
+            int asteroidIndex = GetLane();
+            GrabObject(asteroidIndex);
             time = 0;
         }
+
+    }
+    private int GetLane()
+    {
+
+        return (int) Math.floor(Math.random()*spawnableList.size()+1);
+    }
+    private Boolean HasAvailableObject()
+    {
+        for (Asteroid spawnable: spawnableList) {
+            if(spawnable.getX() < 0 || spawnable.IsActive == false)
+            {
+                spawnableList.remove(spawnable);
+                spawnableList.add(spawnable);
+                spawnable.IsActive = true;
+                return true;
+            }
+
+        }
+        return false;
+    }
+    private void GrabObject(int lane)
+    {
+        float y = lane/getStage().getHeight();
+        spawnableList.get(spawnableList.size()-1).setPosition(getStage().getWidth(), (getStage().getHeight()/spawnableList.size()*lane));
     }
 }
