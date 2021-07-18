@@ -31,7 +31,6 @@ public class HelloWorldGame extends ApplicationAdapter  implements InputProcesso
 	@Override
 	public void create () {
 
-
 		sound = Gdx.audio.newSound(Gdx.files.internal("whistle.mp3"));
 		float volume =1;
 

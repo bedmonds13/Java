@@ -16,10 +16,13 @@ import static  com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class MyActor extends Image {
 
 
-    private float distance;
+    protected float distance;
+    protected float speed;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+
+
         batch.setColor(this.getColor());
         ((TextureRegionDrawable)getDrawable()).draw(batch, getX(),getY()
                 ,getOriginX(),getOriginY(),
@@ -27,48 +30,16 @@ public class MyActor extends Image {
                 ,getScaleX(),getScaleY(),getRotation());
 
     }
-    float speed;
+
 
     public MyActor(Texture texture)
     {
-
-
         super(texture);
+        setZIndex(1);
         distance = 100f;
         speed = 0.1f;
         setBounds(getX(),getY(), getWidth(), getHeight());
-
-
-        addListener(new InputListener(){
-                        @Override
-                        public boolean keyDown(InputEvent event, int keycode) {
-
-                            Movement2D(keycode);
-                            return true;
-                        }
-        });
     }
-
-    private void Movement2D(int keycode) {
-        switch (keycode)
-        {
-            case  Input.Keys.UP:
-                addAction(moveTo(getX(),getY() + distance,speed));
-                break;
-            case  Input.Keys.DOWN:
-                addAction(moveTo(getX(),getY()-distance,speed));
-                break;
-            case  Input.Keys.RIGHT:
-                addAction(moveTo(getX()+distance,getY(),speed));
-                break;
-            case  Input.Keys.LEFT:
-                addAction(moveTo(getX()-distance,getY(),speed));
-                break;
-            default:
-                break;
-        }
-    }
-
 
     @Override
     protected void positionChanged() {
