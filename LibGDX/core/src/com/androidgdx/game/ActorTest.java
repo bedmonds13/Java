@@ -2,7 +2,6 @@ package com.androidgdx.game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -16,6 +15,7 @@ public class ActorTest  extends ApplicationAdapter   {
     Texture background;
     Player actor;
     Image backgroundImg;
+    Spawner asteroidSpawner;
 
     public void create() {
         background = new Texture(Gdx.files.internal("space-background.png"));
@@ -32,7 +32,8 @@ public class ActorTest  extends ApplicationAdapter   {
 
         Texture texture = new Texture(Gdx.files.getFileHandle("Starbasesnow.png", Files.FileType.Internal));
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-         backgroundImg = new Image(texture);
+        backgroundImg = new Image(texture);
+        stage.addActor(backgroundImg);
 
         /*
         Image backgroundImages[] = new Image[5];
@@ -43,12 +44,23 @@ public class ActorTest  extends ApplicationAdapter   {
             backgroundImages[i] = backgroundImg;
             stage.addActor(backgroundImg);
         }
-*/
+        */
+
+
+        asteroidSpawner = new Spawner();
+        stage.addActor(asteroidSpawner);
+        for (int i = 0; i < asteroidSpawner.spawnables.size() ;i++)
+        {
+            asteroidSpawner.spawnables.get(i).addAction(moveTo(stage.getWidth()-asteroidSpawner.getWidth(), (stage.getHeight()/5) * i));
+            stage.addActor(asteroidSpawner.spawnables.get(i));
+        }
+
         actor = new Player(new Texture(Gdx.files.internal("blueship1.png")));
         Asteroid asteroid = new Asteroid(new Texture(Gdx.files.internal("asteroid1.png")));
-        stage.addActor(backgroundImg);
+
         stage.addActor(actor);
         stage.addActor(asteroid);
+
         stage.setKeyboardFocus(actor);
 
     }
@@ -57,7 +69,7 @@ public class ActorTest  extends ApplicationAdapter   {
     public void render() {
 
         backgroundImg.addAction(moveTo(backgroundImg.getX() -0.5f, backgroundImg.getY() ));
-        // stage.getViewport().getCamera().position.y = actor.getY();
+
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

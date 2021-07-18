@@ -13,7 +13,8 @@ public class Asteroid extends MyActor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        addAction(moveTo(getX()- distance*speed, getY()));
+        if(IsActive == true)
+            addAction(moveTo(getX()- distance*speed, getY()));
     }
 
 }

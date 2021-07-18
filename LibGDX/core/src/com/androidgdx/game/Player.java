@@ -28,10 +28,7 @@ public class Player extends   MyActor{
 
     protected void Movement2D(int keycode) {
 
-
-
             switch (keycode) {
-
                 case Input.Keys.UP:
                     if(getY() + distance < getStage().getHeight())
                         addAction(moveTo(getX(), getY() + distance, speed));

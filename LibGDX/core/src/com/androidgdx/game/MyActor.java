@@ -18,6 +18,7 @@ public class MyActor extends Image {
 
     protected float distance;
     protected float speed;
+    public boolean IsActive;
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -39,6 +40,7 @@ public class MyActor extends Image {
         distance = 100f;
         speed = 0.1f;
         setBounds(getX(),getY(), getWidth(), getHeight());
+        IsActive = true;
     }
 
     @Override
