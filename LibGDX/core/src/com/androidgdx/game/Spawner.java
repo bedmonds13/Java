@@ -14,17 +14,20 @@ public class Spawner extends Actor {
     List<Asteroid> spawnableList;
     float time=0;
     Random randomSeed;
+    Player playerTarget;
 
-    Spawner()
+    Spawner(Player player)
     {
-
+        playerTarget = player;
         spawnableList = new ArrayList<>();
         randomSeed = new Random();
         Texture texture = new Texture(Gdx.files.internal("asteroid1.png"));
         for (int i = 0; i < 30; i++) {
-            spawnableList.add(new Asteroid(texture));
-            spawnableList.get(i).IsActive = false;
-            spawnableList.get(i).setScale(0.5f);
+            Asteroid asteroid = new Asteroid(texture, player);
+            spawnableList.add(asteroid);
+            asteroid.IsActive = false;
+            asteroid.setScale(0.5f);
+            asteroid.setTarget(player);
         }
     }
 

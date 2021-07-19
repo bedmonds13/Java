@@ -1,6 +1,7 @@
 package com.androidgdx.game.desktop;
 
 import com.androidgdx.game.ActorTest;
+import com.androidgdx.game.Box2DTest;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.androidgdx.game.HelloWorldGame;
